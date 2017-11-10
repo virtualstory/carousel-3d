@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>carousel</title>
+	<style>
+		.item:nth-child(1) {
+			background-color: green;
+		}
+		.item:nth-child(2) {
+			background-color: blue;
+		}
+		.item:nth-child(3) {
+			background-color: purple;
+		}
+		.item:nth-child(4) {
+			background-color: aqua;
+		}
+		.item:nth-child(5) {
+			background-color: red;
+		}
+		.item:nth-child(6) {
+			background-color: black;
+		}
+		.item:nth-child(7) {
+			background-color: orange;
+		}
+
+
+		.pre {
+			
+		}
+		.pre:hover {
+			/*background-color: red;*/
+		}
+	</style>
+</head>
+<body>
+	
+<div class="carousel">
+	<div class="item item-1">1</div>
+	<div class="item item-2">2</div>
+	<div class="item item-3">3</div>
+	<div class="item item-4">4</div>
+	<div class="item item-5">5</div>
+	<div class="item item-6">6</div>
+</div>
+
+
+
+<script src="../node_modules/_jquery@3.2.1@jquery/dist/jquery.min.js"></script>
+<script src="./jquery.carousel.js"></script>
+<script>
+	$('.carousel').carousel({
+		'carousel': {
+			// 'backgroundColor': 'red'
+		},
+		'item': {
+			// 'backgroundColor': 'red'
+		}
+	});
+</script>
+</body>
+</html>
