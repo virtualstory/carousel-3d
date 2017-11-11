@@ -35,7 +35,7 @@ $("your-carousel-element").carousel(options);
 
 ### options
 
-```json
+```js
 {
 	'itemGap': 10, // 每个.item的距离
 	'speed': 3000, // ms/次
