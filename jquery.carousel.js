@@ -4,8 +4,8 @@
 		let defaultSettings = {
 			'itemGap': 10, // 每个.item的距离
 			'speed': 3000, // ms/次
-			'isLeft2Right': false, // 滚动方向是否为从左往右
-			'numFront': 5, // 大于1，少于.item的个数
+			'isLeft2Right': true, // 滚动方向是否为从左往右
+			'numFront': 6, // 大于1，少于.item的个数
 			'hasPreNext': true, // 是否有 前一张 后一张 按钮
 		};
 
@@ -59,7 +59,34 @@
 
 
 
+		// 前一张 和 下一张 按钮
 		settings.hasPreNext && checkPreNext();
+
+		// 判断 总个数 <= 2时 没有轮播效果
+		checkNumItem();
+
+		// 初始化样式
+		render();
+
+		// 开始运动
+		state.hasCarousel && move();
+
+		// 鼠标移入 停止滚动
+		$oItem.on('mouseenter', function(e){
+			state.hasCarousel && clearInterval(state.timer);
+		});
+
+		// 鼠标移出 继续滚动
+		$oItem.on('mouseout', function(e){
+			state.hasCarousel && move();
+		});
+
+		// .item 点击 
+		$oItem.on('click', function(e){
+			state.hasCarousel && turnToItem($(e.target).prevAll(".item").length)
+		});
+
+
 
 		// 是否有 前一张 和 下一张 按钮
 		function checkPreNext(){
@@ -105,22 +132,14 @@
 			// $preContext.beginPath();
 			// $preContext.fillRect(0,0,50,100);
 			// $preContext.closePath();
-
 		}
 
-
-
-
-		checkNumItem();
-		
+		// 判断 总个数 <= 2时 没有轮播效果
 		function checkNumItem() {
 			if($oItem.length <= 2) {
 				state.hasCarousel = false;
 			}
 		}
-
-		// 初始化样式
-		render();
 
 		// 重置样式
 		function render() {
@@ -158,9 +177,6 @@
 			});
 		}
 
-		// 开始运动
-		state.hasCarousel && move();
-
 		// 运动
 	  function move(){
 			state.timer = setInterval(() => {
@@ -168,42 +184,35 @@
 			}, settings.speed);
 		}
 
-		// 鼠标移入 停止滚动
-		$oItem.on('mouseenter', function(e){
-			state.hasCarousel && clearInterval(state.timer);
-		});
-
-		// 鼠标移出 继续滚动
-		$oItem.on('mouseout', function(e){
-			state.hasCarousel && move();
-		});
-
-		// .item 点击 
-		$oItem.on('click', function(e){
-			// console.log($(e.target).prevAll(".item").length);
-			state.hasCarousel && turnToItem($(e.target).prevAll(".item").length + 1)
-		});
-
 		// 跳转到第n个 .item
 		function turnToItem(n) {
-			// $oItem.
-			let firstIndex = n - (settings.numFront - 1)/2;
-			if(firstIndex <= 0) {
-				firstIndex = $oItem.length + firstIndex;
+			clearInterval(state.timer);
+
+			// 方法一
+			while(state.oFrontItem[Math.floor((state.oFrontItem.length + 1)/2)] != $.makeArray($oItem)[n]) {
+				nextItem();
 			}
+			preItem();
 
-			// let frontItems = $.makeArray($oItem.slice(firstIndex, settings.numFront + firstIndex));
-			let frontItems = [];
-
-			console.log(firstIndex)
+			// 方法二
+			// let arrTmp = [...$oItem, ...$oItem, ... $oItem];
+			// let firstIndex = $oItem.length + n - (settings.numFront%2 === 0 ? settings.numFront/2 : (settings.numFront-1)/2);
+			// state.oFrontItem = $.makeArray(arrTmp.slice(firstIndex, firstIndex + settings.numFront));
 			
+			// let backItems = [];
+			// $.makeArray($oItem).map((v,k) => {
+			// 	let flag = true;
+			// 	state.oFrontItem.map((v1,k1) => {
+			// 		if(v == v1) {
+			// 			flag = false;
+			// 		}
+			// 	});
+			// 	flag && (backItems.push(v));
+			// });
 
-			for(let i = firstIndex - 1; i < settings.numFront; i++) {
-				frontItems.push($.makeArray($oItem.eq(i)));
-			}
+			// state.oBackItem = backItems;
 
-			console.log(frontItems);
-
+			// render();
 		}
 
 		// 下一个 .item
