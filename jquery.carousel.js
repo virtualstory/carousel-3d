@@ -5,7 +5,7 @@
 			'itemGap': 10, // 每个.item的距离
 			'speed': 3000, // ms/次
 			'isLeft2Right': true, // 滚动方向是否为从左往右
-			'numFront': 6, // 大于1，少于.item的个数
+			'numFront': 3, // 大于1，少于.item的个数
 			'hasPreNext': true, // 是否有 前一张 后一张 按钮
 		};
 
