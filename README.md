@@ -24,7 +24,7 @@ html写法：
 
 ```html
 <script src="your-jquery-path/jquery.min.js"></script>
-<<script src="this-carousel-path/jquery.carousel.js"></script>
+<script src="this-carousel-path/jquery.carousel.js"></script>
 ```
 
 ### javascript
